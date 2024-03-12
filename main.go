@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	//"pkg/sysinfo.go"
-	//sysinfo "serverstatus-client/pkg"
 )
 
 func main() {
