@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteTargetsManager">
+    <option name="projectDefaultTargetUuid" value="2f69cd31-5b52-4a58-bd42-98dc48e7aa1e" />
+    <targets>
+      <target name="rui@10.0.0.40:22" type="ssh/sftp" uuid="2f69cd31-5b52-4a58-bd42-98dc48e7aa1e">
+        <config>
+          <option name="projectRootOnTarget" value="/home/rui/serverstatus-client" />
+          <option name="serverName" value="rui@10.0.0.40:22 password" />
+        </config>
+        <ContributedStateBase type="GoLanguageRuntime">
+          <config>
+            <option name="goPath" value="/home/rui/go/bin" />
+            <option name="goRoot" value="/home/rui/go/bin/go" />
+          </config>
+        </ContributedStateBase>
+      </target>
+      <target name="rui@10.0.0.62:22" type="ssh/sftp" uuid="b2697be4-4a7f-452e-9d47-c1608aa7f071">
+        <config>
+          <option name="projectRootOnTarget" value="/home/rui/serverstatus-client" />
+          <option name="serverName" value="rui@10.0.0.62:22 key" />
+        </config>
+        <ContributedStateBase type="GoLanguageRuntime">
+          <config>
+            <option name="goPath" value="/home/rui/go" />
+            <option name="goRoot" value="/usr/local/go/bin/go" />
+            <option name="goVersion" value="go1.15.15 linux/arm64" />
+          </config>
+        </ContributedStateBase>
+      </target>
+    </targets>
+  </component>
+</project>
