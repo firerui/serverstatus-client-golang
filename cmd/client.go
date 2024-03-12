@@ -1,9 +1,9 @@
 package main
 
 import (
-	"serverstatus-client/client"
+	"serverstatus-client/pkg"
 )
 
 func main() {
-	sysInfo := client.get
+	pkg.SystemInfo{}
 }
