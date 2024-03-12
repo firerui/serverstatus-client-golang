@@ -6,5 +6,6 @@ import (
 
 func main() {
 	a := getSysInfo()
+
 	fmt.Printf("systeminfo: %v", a)
 }
