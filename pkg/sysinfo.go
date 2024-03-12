@@ -1,4 +1,4 @@
-package pkg
+package sysinfo
 
 import "log"
 import "github.com/shirou/gopsutil/v3/cpu"
