@@ -1,4 +1,4 @@
-package sysinfo
+package client
 
 import "log"
 import "github.com/shirou/gopsutil/v3/cpu"
@@ -18,10 +18,10 @@ type SystemInfo struct {
 	Uptime        uint64
 	Load1         float64
 	Load5         float64
-	load15        float64
+	Load15        float64
 }
 
-func getSysInfo() SystemInfo {
+func GetSysInfo() SystemInfo {
 	// 获取 host info 信息
 	hostInfo, err := host.Info()
 	if err != nil {
@@ -58,6 +58,6 @@ func getSysInfo() SystemInfo {
 		Uptime:        uptime,
 		Load1:         avg.Load1,
 		Load5:         avg.Load5,
-		load15:        avg.Load15,
+		Load15:        avg.Load15,
 	}
 }
