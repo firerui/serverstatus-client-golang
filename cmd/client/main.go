@@ -145,6 +145,7 @@ func getClientData(item *StatData) {
 	item.Load1 = sInfo.Load1
 	item.Load5 = sInfo.Load5
 	item.Load15 = sInfo.Load15
+	item.Uptime = sInfo.Uptime
 	item.TCPNum, item.UDPNum = client.GetConns()
 	item.TotalHDD, item.UsedHDD = client.GetHDDUsage()
 	//return item

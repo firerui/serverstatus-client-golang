@@ -19,6 +19,10 @@ type SystemInfo struct {
 	Load1         float64
 	Load5         float64
 	Load15        float64
+	MemoryTotal   uint64
+	MemoryUsed    uint64
+	SwapTotal     uint64
+	SwapUsed      uint64
 }
 
 func GetSysInfo() SystemInfo {
