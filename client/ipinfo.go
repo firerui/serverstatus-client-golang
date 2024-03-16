@@ -10,8 +10,8 @@ import (
 )
 
 type IPInfo struct {
-	Query      string  `json:"query"`
-	Source     string  `json:"source"`
+	Query      string `json:"query"`
+	Source     string
 	Continent  string  `json:"continent"`
 	Country    string  `json:"country"`
 	RegionName string  `json:"region_name"`
@@ -71,7 +71,7 @@ func GetIPInfo() IPInfo {
 	//fmt.Printf("ip city: %v\n", bodyJsonData.Query)
 	return IPInfo{
 		Query:      bodyJsonData.Query,
-		Source:     bodyJsonData.Source,
+		Source:     "ip-api.com",
 		Continent:  bodyJsonData.Continent,
 		Country:    bodyJsonData.Country,
 		RegionName: bodyJsonData.RegionName,

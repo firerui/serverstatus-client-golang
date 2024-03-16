@@ -49,7 +49,7 @@ type StatData struct {
 	SwapUsed       uint64        `json:"swap_used"`
 	TotalHDD       uint64        `json:"hdd_total"`
 	UsedHDD        uint64        `json:"hdd_used"`
-	CPU            uint8         `json:"cpu"`
+	CPU            float64       `json:"cpu"`
 	NetworkRx      uint64        `json:"network_rx"`
 	NetworkTx      uint64        `json:"network_tx"`
 	PingCT         uint32        `json:"ping_189"`
@@ -148,5 +148,10 @@ func getClientData(item *StatData) {
 	item.Uptime = sInfo.Uptime
 	item.TCPNum, item.UDPNum = client.GetConns()
 	item.TotalHDD, item.UsedHDD = client.GetHDDUsage()
+	item.MemoryTotal = sInfo.MemoryTotal
+	item.MemoryUsed = sInfo.MemoryUsed
+	item.SwapTotal = sInfo.SwapTotal
+	item.SwapUsed = sInfo.SwapUsed
+	item.CPU = client.CalculateCPUUsage(1.2)
 	//return item
 }
