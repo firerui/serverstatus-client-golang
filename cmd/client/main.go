@@ -151,7 +151,7 @@ func connect(address string, username string, password string, headers map[strin
 
 	// 设置超时
 	netClient := &http.Client{
-		Timeout: 30 * time.Second,
+		Timeout: 12 * time.Second,
 	}
 
 	// 发送请求
