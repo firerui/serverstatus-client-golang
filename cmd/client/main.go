@@ -1,15 +1,19 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"flag"
 	"fmt"
+	"io"
 	"log"
+	"net/http"
 	"serverstatus-client/client"
+	"time"
 )
 
 var (
-	ADDRESS  = flag.String("a", "http://127.0.0.1:8080/report", "HTTP/TCP address")
+	ADDRESS  = flag.String("a", "http://127.0.0.1:8080", "HTTP/TCP address")
 	USER     = flag.String("u", "h1", "auth user")
 	PASS     = flag.String("p", "p1", "auth pass")
 	INTERVAL = flag.Float64("interval", 2.0, "report interval")
@@ -102,7 +106,17 @@ func main() {
 	data, _ := json.Marshal(item)
 	strData := string(data)
 	fmt.Printf("data: %v\n", strData)
-
+	*ADDRESS = "http://10.0.0.62:8080/report"
+	*USER = "h2"
+	*PASS = "p2"
+	headers := map[string]string{
+		"ssr-auth": "single",
+	}
+	for {
+		connect(*ADDRESS, *USER, *PASS, headers, data)
+		//connect(data)
+		time.Sleep(2 * time.Second)
+	}
 	// todo 先做一个让它打印出需要收集信息的东西
 	//a := getSysInfo()
 	//a := client.GetSysInfo()
@@ -116,6 +130,70 @@ func main() {
 	//c := client.GetIPInfo()
 	//fmt.Printf("ipinfo: %v\n", c)
 }
+
+func connect(address string, username string, password string, headers map[string]string, data []byte) {
+	log.Println("尝试连接...")
+
+	// 构建HTTP请求，并设置基础认证信息
+	req, err := http.NewRequest("POST", address, bytes.NewBuffer(data))
+	if err != nil {
+		log.Println("创建请求失败：", err.Error())
+		return
+	}
+
+	// 设置基础认证
+	req.SetBasicAuth(username, password)
+
+	// 设置请求头
+	for k, v := range headers {
+		req.Header.Set(k, v)
+	}
+
+	// 设置超时
+	netClient := &http.Client{
+		Timeout: 30 * time.Second,
+	}
+
+	// 发送请求
+	resp, err := netClient.Do(req)
+	if err != nil {
+		log.Println("发送请求失败：", err.Error())
+		return
+	}
+	defer resp.Body.Close()
+
+	// 检查响应状态码
+	if resp.StatusCode != http.StatusOK {
+		log.Println("收到非成功响应状态码：", resp.StatusCode)
+		return
+	}
+
+	// 处理响应体（如果需要的话）
+	bodyBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		log.Println("读取响应体失败：", err.Error())
+		return
+	}
+	log.Printf("发送成功，响应长度：%d Byte\n", len(bodyBytes))
+}
+
+//func connect(data []byte) {
+//	log.Println("尝试连接...")
+//	conn, err := net.DialTimeout("tcp", *ADDRESS, 30*time.Second)
+//	if err != nil {
+//		log.Println("Caught Exception:", err.Error())
+//		time.Sleep(5 * time.Second)
+//		return
+//	}
+//	defer func(conn net.Conn) {
+//		_ = conn.Close()
+//		time.Sleep(5 * time.Second)
+//	}(conn)
+//	_, _ = conn.Write([]byte((*USER + ":" + *PASS + "\n")))
+//	_ = conn.SetWriteDeadline(time.Now().Add(12 * time.Second))
+//	write, _ := conn.Write(data)
+//	log.Printf("发送成功：%dByte\n", write)
+//}
 
 func getClientData(item *StatData) {
 	//var item StatData
